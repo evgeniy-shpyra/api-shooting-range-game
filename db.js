@@ -1,4 +1,4 @@
-const Pull = require('pg').Pool
+//const Pull = require('pg').Pool
 // const pool = new Pull({
 //     user: "postgres",
 //     password: '123456789',
@@ -7,24 +7,18 @@ const Pull = require('pg').Pool
 //     database: 'score'
 // })
 
-const pool = Pool({
-    connectionString: process.env.DATABASE_URL,
+const Pool = require("pg").Pool;
+
+require("dotenv").config();
+
+const isProduction = process.env.NODE_ENV === "production";
+
+const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
+
+const pool = new Pool({
+    connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
     ssl: {
-        rejectUnauthorized: false
-    }
-}).get('/db', async (req, res) => {
-        try {
-            const client = await pool.connect();
-            const result = await client.query('SELECT * FROM test_table');
-            const results = { 'results': (result) ? result.rows : null };
-            res.render('pages/db', results);
-            client.release();
-        } catch (err) {
-            console.error(err);
-            res.send("Error " + err);
-        }
-    })
-
-
-
-module.exports = pool  
+        rejectUnauthorized: false,
+    },
+});
+module.exports = pool;
