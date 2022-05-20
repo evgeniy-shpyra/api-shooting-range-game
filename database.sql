@@ -12,9 +12,9 @@ create TABLE history_game (
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-create TABLE topUser (
-    id SERIAL PRIMARY KEY,
-    score INTEGER,
-    users_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users (id)
-);
+-- create TABLE topUser (
+--     id SERIAL PRIMARY KEY,
+--     score INTEGER,
+--     users_id INTEGER,
+--     FOREIGN KEY (user_id) REFERENCES users (id)
+-- );
