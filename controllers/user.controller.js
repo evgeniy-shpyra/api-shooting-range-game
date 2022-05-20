@@ -8,7 +8,7 @@ class UserController {
         res.json(newUser.rows[0])
     }
     async getUsers(req, res) {
-        const users = await db.query(`SELECT * FROM users`)
+        const users = await db.query(`SELECT id, name FROM users`)
         res.json(users.rows)
     }
     async getOneUser(req, res) {
